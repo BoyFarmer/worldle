@@ -8,6 +8,7 @@ import {Observable} from "rxjs";
 import {CountryCode} from "./domain/country";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import * as geolib from "geolib";
+import {environment} from "../environments/environment";
 
 export interface Guess {
   countryName: string,
@@ -25,6 +26,7 @@ export interface Guess {
 })
 export class AppComponent {
 
+  prefix = environment.production ? '/worldle' : '';
   fg = new FormGroup({value: new FormControl('')});
   private allCountries = countries.map(c => c.name);
   countryNames: Observable<string[]>;

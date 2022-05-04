@@ -3,7 +3,7 @@
   <app-stats></app-stats>
 </mat-toolbar>
 <div class="content">
-  <img [src]="'/assets/img/'+countryToGuess.code+'.svg'">
+  <img [src]="prefix + '/assets/img/'+countryToGuess.code+'.svg'">
   <app-country-guess index="1" [guess]="guesses[0]"></app-country-guess>
   <app-country-guess index="2" [guess]="guesses[1]"></app-country-guess>
   <app-country-guess index="3" [guess]="guesses[2]"></app-country-guess>
