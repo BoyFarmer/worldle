@@ -1,0 +1,8 @@
+<div class="guess">
+  {{index}}.
+  <ng-container *ngIf="guess as g">
+    <div class="country">{{g.countryName}}</div>
+    <div class="distance">{{g.distance | distance}} km</div>
+    <div class="direction"><mat-icon [style.transform]="guess.direction | direction">east</mat-icon></div>
+  </ng-container>
+</div>

@@ -1,0 +1,28 @@
+<mat-toolbar>
+  Worldle
+  <app-stats></app-stats>
+</mat-toolbar>
+<div class="content">
+  <img [src]="'/assets/img/'+countryToGuess.code+'.svg'">
+  <app-country-guess index="1" [guess]="guesses[0]"></app-country-guess>
+  <app-country-guess index="2" [guess]="guesses[1]"></app-country-guess>
+  <app-country-guess index="3" [guess]="guesses[2]"></app-country-guess>
+  <app-country-guess index="4" [guess]="guesses[3]"></app-country-guess>
+  <app-country-guess index="5" [guess]="guesses[4]"></app-country-guess>
+  <app-country-guess index="6" [guess]="guesses[5]"></app-country-guess>
+<form [formGroup]="fg" class="example-form" (ngSubmit)="submit()">
+    <mat-form-field class="full-width" appearance="fill">
+      <input type="text"
+             matInput
+             formControlName="value"
+             [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let option of countryNames | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <button type="submit" class="guess" mat-stroked-button [disabled]="guessed || guesses.length === 6">Guess</button>
+  </form>
+  <button mat-stroked-button (click)="reset()">New country</button>
+</div>

@@ -1,0 +1,26 @@
+.content {
+  max-width: 400px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  img {
+    margin: 8px;
+    max-height: 300px;
+    filter: invert(90%);
+  }
+}
+
+.full-width {
+  margin-top: 16px;
+  width: 100%;
+}
+.guess {
+  margin-bottom: 20px;
+  width: 100%;
+}
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,0 +1,22 @@
+//div.guess {
+//  width: 100%;
+//  display: inline;
+//}
+
+div.guess {
+  display: flex;
+  flex-direction: row;
+  border: solid 1px rgba(255, 255, 255, 0.40);
+  padding: 4px 12px;
+  margin: 4px;
+  height: 22px;
+  .country {
+    margin-left: 8px;
+  }
+  .distance {
+    margin-left: auto;
+  }
+  .direction {
+    margin-left: 16px;
+  }
+}
