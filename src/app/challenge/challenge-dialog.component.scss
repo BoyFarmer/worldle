@@ -1,0 +1,35 @@
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 8px !important;
+  min-width: 320px;
+}
+
+.hint {
+  margin: 0;
+  font-size: 0.82rem;
+  opacity: 0.6;
+  line-height: 1.5;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.field-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.mode-radio {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.value-field {
+  width: 100%;
+}

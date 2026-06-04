@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>🏆 Challenge Mode</h2>
+
+<mat-dialog-content class="dialog-content">
+  <p class="hint">
+    After starting, share the URL with a friend — anyone with the same link
+    plays the exact same sequence of countries.
+  </p>
+
+  <div class="field-group">
+    <span class="field-label">Game mode</span>
+    <mat-radio-group class="mode-radio" [(ngModel)]="mode">
+      <mat-radio-button value="countries">Fixed number of countries</mat-radio-button>
+      <mat-radio-button value="time">Time limit</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <mat-form-field appearance="outline" class="value-field">
+    <mat-label>{{label}}</mat-label>
+    <input matInput type="number" [(ngModel)]="value" min="1" [max]="maxValue">
+    <mat-hint>{{hint}}</mat-hint>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-flat-button (click)="start()" [disabled]="value < 1">
+    <mat-icon>play_arrow</mat-icon>
+    Start Challenge
+  </button>
+</mat-dialog-actions>

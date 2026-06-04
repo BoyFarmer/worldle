@@ -1,11 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'distance'
+  name: 'distance',
 })
 export class DistancePipe implements PipeTransform {
 
-  transform(value: number): unknown {
+  transform(value: number): number {
     return Math.floor(value / 1000);
   }
 

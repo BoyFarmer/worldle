@@ -19,7 +19,7 @@ const rotates: Record<"S" | "W" | "NNE" | "NE" | "ENE" | "E" | "ESE" | "SE" | "S
   NNW: 'rotateZ(247deg)',
 }
 @Pipe({
-  name: 'direction'
+  name: 'direction',
 })
 export class DirectionPipe implements PipeTransform {
 

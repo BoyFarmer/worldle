@@ -1,28 +1,135 @@
-<mat-toolbar>
-  Worldle
-  <app-stats></app-stats>
+<mat-toolbar class="toolbar">
+  <span class="toolbar-title">🌍 Worldle</span>
+  <div class="toolbar-right">
+    <app-stats></app-stats>
+    <button mat-icon-button class="challenge-btn" (click)="openChallengeDialog()" aria-label="Challenge mode">
+      <mat-icon>emoji_events</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
-<div class="content">
-  <img [src]="prefix + '/assets/img/'+countryToGuess.code+'.svg'">
-  <app-country-guess index="1" [guess]="guesses[0]"></app-country-guess>
-  <app-country-guess index="2" [guess]="guesses[1]"></app-country-guess>
-  <app-country-guess index="3" [guess]="guesses[2]"></app-country-guess>
-  <app-country-guess index="4" [guess]="guesses[3]"></app-country-guess>
-  <app-country-guess index="5" [guess]="guesses[4]"></app-country-guess>
-  <app-country-guess index="6" [guess]="guesses[5]"></app-country-guess>
-<form [formGroup]="fg" class="example-form" (ngSubmit)="submit()">
-    <mat-form-field class="full-width" appearance="fill">
-      <input type="text"
-             matInput
-             formControlName="value"
-             [matAutocomplete]="auto">
-      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-        <mat-option *ngFor="let option of countryNames | async" [value]="option">
-          {{option}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-    <button type="submit" class="guess" mat-stroked-button [disabled]="guessed || guesses.length === 6">Guess</button>
-  </form>
-  <button mat-stroked-button (click)="reset()">New country</button>
+
+<div class="game-wrapper">
+  <div class="game-container">
+
+    @if (challengeFinished()) {
+
+      <!-- Challenge complete screen -->
+      <div class="challenge-done">
+        <div class="challenge-done__trophy">🏆</div>
+        <h2 class="challenge-done__title">Challenge Complete!</h2>
+        <div class="challenge-done__score">
+          <span class="challenge-done__num">{{challengeScore()}}</span>
+          <span class="challenge-done__label">countries guessed correctly</span>
+        </div>
+        <div class="challenge-done__actions">
+          <button mat-flat-button (click)="replayChallenge()">
+            <mat-icon>replay</mat-icon>
+            Play Again (same seed)
+          </button>
+          <button mat-stroked-button (click)="exitChallenge()">
+            <mat-icon>home</mat-icon>
+            Normal Mode
+          </button>
+        </div>
+      </div>
+
+    } @else {
+
+      <!-- Challenge progress bar (challenge mode only) -->
+      @if (isChallengeMode()) {
+        <div class="challenge-bar">
+          <div class="challenge-stat">
+            @if (challengeSettings()!.mode === 'time') {
+              <mat-icon>timer</mat-icon>
+              <span>{{timeLeftFormatted()}}</span>
+            } @else {
+              <mat-icon>flag</mat-icon>
+              <span>{{challengeIndex() + 1}} / {{challengeSettings()!.value}}</span>
+            }
+          </div>
+          <div class="challenge-stat">
+            <mat-icon>check_circle</mat-icon>
+            <span>{{challengeScore()}} correct</span>
+          </div>
+        </div>
+      }
+
+      <!-- Country silhouette -->
+      <mat-card class="shape-card" appearance="outlined">
+        <mat-card-content>
+          <img class="country-img"
+               [src]="prefix + '/assets/img/' + countryToGuess().code + '.svg'"
+               alt="Guess this country shape">
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Six guess rows -->
+      <div class="guesses">
+        @for (i of slots; track i) {
+          <app-country-guess
+            [number]="i + 1"
+            [guess]="guesses()[i]"
+            [language]="language()">
+          </app-country-guess>
+        }
+      </div>
+
+      <!-- Input area: language toggle + autocomplete form -->
+      @if (!gameOver()) {
+        <div class="input-area">
+          <mat-button-toggle-group
+            class="lang-toggle"
+            [value]="language()"
+            (change)="setLanguage($event.value)">
+            <mat-button-toggle value="pl">PL</mat-button-toggle>
+            <mat-button-toggle value="en">EN</mat-button-toggle>
+          </mat-button-toggle-group>
+
+          <form class="input-field-wrap" (ngSubmit)="submit()">
+            <mat-form-field appearance="outline" class="input-field" subscriptSizing="dynamic">
+              <input matInput [formControl]="fc" [matAutocomplete]="auto"
+                     placeholder="Type a country name…"
+                     autocomplete="off" autocapitalize="off" spellcheck="false">
+              <mat-autocomplete #auto="matAutocomplete">
+                @for (option of countryNames(); track option) {
+                  <mat-option [value]="option">{{option}}</mat-option>
+                }
+              </mat-autocomplete>
+            </mat-form-field>
+          </form>
+
+          <button mat-flat-button class="submit-btn" (click)="submit()">Guess</button>
+        </div>
+        @if (errorMessage()) {
+          <p class="error-msg">{{errorMessage()}}</p>
+        }
+      }
+
+      <!-- Per-country result banner -->
+      @if (gameOver()) {
+        <div class="result-banner"
+             [class.result-banner--won]="guessed()"
+             [class.result-banner--lost]="!guessed()">
+          @if (guessed()) {
+            <mat-icon>celebration</mat-icon>
+            <span>Correct! That's <strong>{{countryToGuessName()}}</strong></span>
+          } @else {
+            <mat-icon>sentiment_dissatisfied</mat-icon>
+            <span>The answer was <strong>{{countryToGuessName()}}</strong></span>
+          }
+        </div>
+
+        @if (isChallengeMode()) {
+          <p class="next-hint">Next country coming up…</p>
+        } @else {
+          <button mat-stroked-button class="play-again-btn" (click)="reset()">
+            <mat-icon>refresh</mat-icon>
+            Play Again
+          </button>
+        }
+      }
+
+    }
+
+  </div>
 </div>

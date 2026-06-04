@@ -1,6 +1,16 @@
-<ng-container *ngIf="stats | async as s">
-  <div>Total attempts: {{s[0].length | number}}</div>
-  <div>Percent of guessed countries: {{s[1][0] | number}}%</div>
-  <div>Countries omitted: {{s[1][1] | number}}</div>
-  <div>Average number of attempts per country: {{s[1][2] | number}}</div>
-</ng-container>
+@if (stats | async; as s) {
+  <div class="stats-row">
+    <div class="stat">
+      <span class="stat-val">{{s[0].length}}</span>
+      <span class="stat-lbl">played</span>
+    </div>
+    <div class="stat">
+      <span class="stat-val">{{s[1][0] | number:'1.0-0'}}%</span>
+      <span class="stat-lbl">won</span>
+    </div>
+    <div class="stat">
+      <span class="stat-val">{{s[1][2] | number:'1.1-1'}}</span>
+      <span class="stat-lbl">avg tries</span>
+    </div>
+  </div>
+}
