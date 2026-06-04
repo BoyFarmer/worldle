@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "github-build": "ng build --configuration production --base-href 'https://boyfarmer.github.io/worldle/'"
+    "github-build": "ng build --configuration production --base-href 'https://boyfarmer.github.io/worldle/'",
+    "github-deploy": "npx angular-cli-ghpages --dir=dist/worldle/browser --no-silent"
   },
   "private": true,
   "dependencies": {
