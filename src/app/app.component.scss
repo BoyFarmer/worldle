@@ -173,6 +173,13 @@
   color: var(--mat-sys-error);
 }
 
+.reveal-btn {
+  align-self: center;
+  margin-top: -4px;
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
 /* Result banner */
 .result-banner {
   display: flex;

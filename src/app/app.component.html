@@ -109,6 +109,12 @@
         @if (errorMessage()) {
           <p class="error-msg">{{errorMessage()}}</p>
         }
+        @if (!isChallengeMode()) {
+          <button mat-button class="reveal-btn" (click)="reveal()">
+            <mat-icon>visibility</mat-icon>
+            I don't know — reveal the answer
+          </button>
+        }
       }
 
       <!-- Per-country result banner -->

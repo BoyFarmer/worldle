@@ -65,8 +65,9 @@ export class AppComponent implements OnInit {
   countryToGuess = signal<Country>(randomCountry());
   guesses = signal<Guess[]>([]);
   guessed = signal(false);
+  revealed = signal(false);
   showFlag = signal(false);
-  gameOver = computed(() => this.guessed() || this.guesses().length === 6);
+  gameOver = computed(() => this.guessed() || this.revealed() || this.guesses().length === 6);
   errorMessage = signal('');
   countryToGuessName = computed(() =>
     this.language() === 'pl' ? this.countryToGuess().polishName : this.countryToGuess().name
@@ -136,6 +137,7 @@ export class AppComponent implements OnInit {
     this.countryToGuess.set(this.challengeSequence[0]);
     this.guesses.set([]);
     this.guessed.set(false);
+    this.revealed.set(false);
     this.showFlag.set(false);
     this.fc.enable();
     this.fc.reset();
@@ -186,6 +188,7 @@ export class AppComponent implements OnInit {
     this.countryToGuess.set(this.challengeSequence[nextIdx]);
     this.guesses.set([]);
     this.guessed.set(false);
+    this.revealed.set(false);
     this.showFlag.set(false);
     this.fc.enable();
     this.fc.reset();
@@ -204,6 +207,7 @@ export class AppComponent implements OnInit {
     this.countryToGuess.set(randomCountry());
     this.guesses.set([]);
     this.guessed.set(false);
+    this.revealed.set(false);
     this.showFlag.set(false);
     this.fc.enable();
     this.fc.reset();
@@ -256,10 +260,18 @@ export class AppComponent implements OnInit {
     }
   }
 
+  reveal() {
+    if (this.isChallengeMode() || this.gameOver()) return;
+    this.revealed.set(true);
+    this.fc.disable();
+    this.saveStats();
+  }
+
   reset() {
     this.countryToGuess.set(randomCountry());
     this.guesses.set([]);
     this.guessed.set(false);
+    this.revealed.set(false);
     this.showFlag.set(false);
     this.errorMessage.set('');
     this.fc.enable();
