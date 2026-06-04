@@ -58,6 +58,7 @@
 
 /* Country shape card */
 .shape-card {
+  position: relative;
   background: #0d1117 !important;
   border-color: rgba(255, 255, 255, 0.1) !important;
 
@@ -83,7 +84,21 @@
     @media (max-width: 479px) {
       max-height: 160px;
     }
+
+    &--flag {
+      filter: none;
+    }
   }
+}
+
+.flag-toggle {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  opacity: 0.55;
+  transition: opacity 0.2s;
+  z-index: 1;
+  &:hover { opacity: 1; }
 }
 
 /* Guess rows container */

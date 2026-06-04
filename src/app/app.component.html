@@ -54,12 +54,18 @@
         </div>
       }
 
-      <!-- Country silhouette -->
+      <!-- Country silhouette / flag -->
       <mat-card class="shape-card" appearance="outlined">
+        <button mat-icon-button class="flag-toggle" (click)="showFlag.set(!showFlag())"
+                [attr.aria-label]="showFlag() ? 'Show shape' : 'Show flag'">
+          <mat-icon>{{showFlag() ? 'crop_free' : 'flag'}}</mat-icon>
+        </button>
         <mat-card-content>
-          <img class="country-img"
-               [src]="prefix + '/assets/img/' + countryToGuess().code + '.svg'"
-               alt="Guess this country shape">
+          <img [class]="showFlag() ? 'country-img country-img--flag' : 'country-img'"
+               [src]="showFlag()
+                 ? prefix + '/assets/flags/' + countryToGuess().code + '.svg'
+                 : prefix + '/assets/img/' + countryToGuess().code + '.svg'"
+               [alt]="showFlag() ? 'Country flag' : 'Guess this country shape'">
         </mat-card-content>
       </mat-card>
 
